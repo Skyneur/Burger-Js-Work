@@ -1,0 +1,29 @@
+/* ...existing code... */
+
+#slideshow-container {
+    position: relative;
+    max-width: 100%;
+    margin: auto;
+    overflow: hidden;
+}
+
+#slideshow-image {
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.5s ease-in-out;
+}
+
+#slideshow-image:hover {
+    transform: scale(1.05);
+}
+
+#burger-name {
+    text-align: center;
+    font-size: 1.5em;
+    margin-top: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* ...existing code... */

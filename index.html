@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Burger factory</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Burger Factory</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="about-link">Qui sommes-nous ?</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div id="slideshow-container">
+        <img id="slideshow-image" src="assets/burger1.png" alt="Burger Image">
+    </div>
+    <p id="burger-name"></p>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Créer votre Ingrédient</h3>
+                <form id="ingredient-form">
+                    <div class="form-group">
+                        <label for="ingredient-name">Nom</label>
+                        <input type="text" class="form-control" id="ingredient-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ingredient-quantity">Quantité</label>
+                        <input type="number" class="form-control" id="ingredient-quantity" required min="1">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Créer l’ingrédient</button>
+                </form>
+                <div id="error-message" class="text-danger mt-3"></div>
+            </div>
+            <div class="col-md-6">
+                <h3>Image des ingrédients</h3>
+                <img src="assets/ingredient.jpg" alt="Image des ingrédients" class="img-fluid">
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <h3>Création Burger</h3>
+                <form id="burger-form">
+                    <div class="form-group">
+                        <label for="burger-name">Nom du Burger</label>
+                        <input type="text" class="form-control" id="burger-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ingredient1">Ingrédient 1</label>
+                        <select id="ingredient1" class="form-control" required>
+                            <option value="">Sélectionner un ingrédient</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="ingredient2">Ingrédient 2</label>
+                        <select id="ingredient2" class="form-control" required>
+                            <option value="">Sélectionner un ingrédient</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="ingredient3">Ingrédient 3</label>
+                        <select id="ingredient3" class="form-control" required>
+                            <option value="">Sélectionner un ingrédient</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Créer le burger</button>
+                </form>
+                <div id="burger-error-message" class="text-danger mt-3"></div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
