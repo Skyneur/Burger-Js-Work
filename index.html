@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Burger factory</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -15,17 +16,25 @@
                     <a class="nav-link" href="#">Accueil</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="#ingredient-section">Créer un Ingrédient</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#burger-section">Créer un Burger</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="#" id="about-link">Qui sommes-nous ?</a>
                 </li>
             </ul>
         </div>
     </nav>
+
     <div id="slideshow-container">
         <img id="slideshow-image" src="assets/burger1.png" alt="Burger Image">
-    </div>
-    <p id="burger-name"></p>
+        <p id="burger-name"></p>
+    </div>    
+
     <div class="container mt-5">
-        <div class="row">
+        <div id="ingredient-section" class="row">
             <div class="col-md-6">
                 <h3>Créer votre Ingrédient</h3>
                 <form id="ingredient-form">
@@ -46,7 +55,8 @@
                 <img src="assets/ingredient.jpg" alt="Image des ingrédients" class="img-fluid">
             </div>
         </div>
-        <div class="row mt-5">
+
+        <div id="burger-section" class="row mt-5">
             <div class="col-md-12">
                 <h3>Création Burger</h3>
                 <form id="burger-form">
@@ -78,6 +88,11 @@
             </div>
         </div>
     </div>
+
+    <footer>
+        © 2024 Burger Factory. Tous droits réservés.
+    </footer>
+
     <script src="script.js"></script>
 </body>
 </html>

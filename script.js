@@ -1,3 +1,4 @@
+// Variables globales
 const images = [
     { src: 'burger1.png', name: 'Burger 1' },
     { src: 'burger2.png', name: 'Burger 2' },
@@ -8,22 +9,25 @@ let currentIndex = 0;
 const imageElement = document.getElementById('slideshow-image');
 const burgerNameElement = document.getElementById('burger-name');
 
+// Fonction pour changer l'image
 function showNextImage() {
     currentIndex = (currentIndex + 1) % images.length;
     imageElement.src = `assets/${images[currentIndex].src}`;
 }
 
+// Fonction pour afficher le nom du burger
 function showBurgerName() {
     burgerNameElement.textContent = images[currentIndex].name;
 }
 
+// Intervalle pour changer l'image
 imageElement.addEventListener('click', showBurgerName);
-
 setInterval(showNextImage, 10000);
 
-// Initial image setup
+// Configuration initiale de l'image
 imageElement.src = `assets/${images[currentIndex].src}`;
 
+// Gestion des formulaires
 document.addEventListener('DOMContentLoaded', function() {
     const ingredientForm = document.getElementById('ingredient-form');
     const ingredientList = document.getElementById('ingredient-list');
@@ -39,13 +43,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const ingredients = new Map();
 
+    // Gestion de la soumission du formulaire d'ingrédients
     ingredientForm.addEventListener('submit', function(event) {
         event.preventDefault();
         
         const name = document.getElementById('ingredient-name').value.trim();
         const quantity = parseInt(document.getElementById('ingredient-quantity').value.trim(), 10);
         
-        if (!name || quantity <= 0) {
+        if (!name || isNaN(quantity) || quantity <= 0) {
             errorMessage.textContent = 'Veuillez entrer un nom valide et une quantité supérieure à 0.';
             return;
         }
@@ -65,6 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
         ingredientForm.reset();
     });
 
+    // Gestion de la soumission du formulaire de burger
     burgerForm.addEventListener('submit', function(event) {
         event.preventDefault();
         
