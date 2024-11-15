@@ -1,42 +1,39 @@
-// Variables globales
-const burgerImages = [
-    { src: 'classicburger.png', name: 'Classique Burger' },
-    { src: 'original.png', name: 'l\'Original' },
-    { src: 'bbqbacon.png', name: 'BbqBacon' }
-];
-
-let currentBurgerIndex = 0;
-const carouselImageElement = document.getElementById('carouselImage');
-const burgerLabelElement = document.getElementById('burgerLabel');
-
-// Fonction pour changer l'image
-function updateBurgerImage() {
-    currentBurgerIndex = (currentBurgerIndex + 1) % burgerImages.length;
-    carouselImageElement.src = `assets/${burgerImages[currentBurgerIndex].src}`;
-    burgerLabelElement.textContent = burgerImages[currentBurgerIndex].name;
-}
-
-// Intervalle pour changer l'image
-setInterval(updateBurgerImage, 10000);
-carouselImageElement.addEventListener('click', updateBurgerImage);
-
-// Gestion des formulaires
 document.addEventListener('DOMContentLoaded', function() {
+    const burgerImages = [
+        { src: 'classicburger.png', name: 'Classique Burger' },
+        { src: 'original.png', name: "l'Original" },
+        { src: 'bbqbacon.png', name: 'BbqBacon' }
+    ];
+
+    let currentBurgerIndex = 0;
+    const carouselImageElement = document.getElementById('carouselImage');
+    const burgerLabelElement = document.getElementById('burgerLabel');
+
+    function updateBurgerImage() {
+        currentBurgerIndex = (currentBurgerIndex + 1) % burgerImages.length;
+        carouselImageElement.src = `assets/${burgerImages[currentBurgerIndex].src}`;
+        burgerLabelElement.textContent = burgerImages[currentBurgerIndex].name;
+    }
+
+    setInterval(updateBurgerImage, 10000);
+    carouselImageElement.addEventListener('click', updateBurgerImage);
+
     const ingredientForm = document.getElementById('ingredientForm');
     const burgerForm = document.getElementById('burgerForm');
     const ingredientOneSelect = document.getElementById('ingredientOne');
     const ingredientTwoSelect = document.getElementById('ingredientTwo');
     const ingredientThreeSelect = document.getElementById('ingredientThree');
 
-    const ingredients = [];
+    const ingredients = {};
 
-    // Fonction pour mettre à jour les options des listes déroulantes
     function updateIngredientOptions() {
         const selects = [ingredientOneSelect, ingredientTwoSelect, ingredientThreeSelect];
         selects.forEach(select => {
             select.innerHTML = '';
-            ingredients.forEach(ingredient => {
-                select.innerHTML += `<option value="${ingredient}">${ingredient}</option>`;
+            Object.entries(ingredients).forEach(([name, quantity]) => {
+                if (quantity > 0) {
+                    select.innerHTML += `<option value="${name}">${name} (${quantity})</option>`;
+                }
             });
         });
     }
@@ -44,14 +41,14 @@ document.addEventListener('DOMContentLoaded', function() {
     ingredientForm.addEventListener('submit', function(event) {
         event.preventDefault();
         const name = document.getElementById('ingredientInput').value.trim();
-        const quantity = document.getElementById('quantityInput').value;
+        const quantity = parseInt(document.getElementById('quantityInput').value, 10);
 
-        if (!name || quantity <= 0) {
+        if (!name || isNaN(quantity) || quantity <= 0) {
             document.getElementById('ingredientError').textContent = 'Veuillez entrer des valeurs valides.';
             return;
         }
 
-        ingredients.push(name);
+        ingredients[name] = (ingredients[name] || 0) + quantity;
         updateIngredientOptions();
         document.getElementById('ingredientError').textContent = '';
         ingredientForm.reset();
@@ -69,18 +66,45 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // Retirer les ingrédients utilisés
         [ingredient1, ingredient2, ingredient3].forEach(ingredient => {
-            const index = ingredients.indexOf(ingredient);
-            if (index > -1) {
-                ingredients.splice(index, 1);
+            if (ingredients[ingredient] > 0) {
+                ingredients[ingredient] -= 1;
             }
         });
 
-        // Mettre à jour les options des listes déroulantes
         updateIngredientOptions();
-
         alert(`Burger "${burgerName}" créé avec : ${ingredient1}, ${ingredient2}, ${ingredient3}`);
         burgerForm.reset();
+    });
+
+    const fetchInfoBtn = document.getElementById('fetchInfoBtn');
+    const infoContainer = document.getElementById('infoContainer');
+
+    fetchInfoBtn.addEventListener('click', function() {
+        fetch('mockData.json')
+            .then(response => {
+                if (!response.ok) throw new Error('Erreur lors de la récupération des informations.');
+                return response.json();
+            })
+            .then(data => {
+                if (!data.adressesOperateurs || data.adressesOperateurs.length === 0) {
+                    throw new Error('Aucune adresse trouvée.');
+                }
+
+                const adresse = data.adressesOperateurs[0];
+                const productions = data.productions || [];
+
+                infoContainer.innerHTML = `
+                    <p>Notre restaurant travaille avec des produits locaux provenant de la ferme bio numéro 
+                    <strong>${data.numeroBio}</strong> de Monsieur <strong>${data.gerant}</strong>, située à 
+                    <strong>${adresse.lieu} ${adresse.codePostal} ${adresse.ville}</strong>.</p>
+                    <p>Cette ferme intervient dans les commerces :</p>
+                    <ul>${productions.map(prod => `<li>${prod.nom}</li>`).join('')}</ul>
+                `;
+            })
+            .catch(error => {
+                console.error(error.message);
+                infoContainer.innerHTML = '<p>Une erreur est survenue. Veuillez réessayer plus tard.</p>';
+            });
     });
 });
