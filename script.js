@@ -30,6 +30,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const ingredients = [];
 
+    // Fonction pour mettre à jour les options des listes déroulantes
+    function updateIngredientOptions() {
+        const selects = [ingredientOneSelect, ingredientTwoSelect, ingredientThreeSelect];
+        selects.forEach(select => {
+            select.innerHTML = '';
+            ingredients.forEach(ingredient => {
+                select.innerHTML += `<option value="${ingredient}">${ingredient}</option>`;
+            });
+        });
+    }
+
     ingredientForm.addEventListener('submit', function(event) {
         event.preventDefault();
         const name = document.getElementById('ingredientInput').value.trim();
@@ -41,9 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         ingredients.push(name);
-        ingredientOneSelect.innerHTML += `<option value="${name}">${name}</option>`;
-        ingredientTwoSelect.innerHTML += `<option value="${name}">${name}</option>`;
-        ingredientThreeSelect.innerHTML += `<option value="${name}">${name}</option>`;
+        updateIngredientOptions();
         document.getElementById('ingredientError').textContent = '';
         ingredientForm.reset();
     });
@@ -59,6 +68,17 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('burgerError').textContent = 'Veuillez remplir tous les champs.';
             return;
         }
+
+        // Retirer les ingrédients utilisés
+        [ingredient1, ingredient2, ingredient3].forEach(ingredient => {
+            const index = ingredients.indexOf(ingredient);
+            if (index > -1) {
+                ingredients.splice(index, 1);
+            }
+        });
+
+        // Mettre à jour les options des listes déroulantes
+        updateIngredientOptions();
 
         alert(`Burger "${burgerName}" créé avec : ${ingredient1}, ${ingredient2}, ${ingredient3}`);
         burgerForm.reset();
