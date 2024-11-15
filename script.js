@@ -39,9 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const selectedValue = select.value; // Sauvegarder la valeur sélectionnée
                 select.innerHTML = '<option value="">Sélectionner un ingrédient</option>'; // Option par défaut
                 Object.entries(ingredients).forEach(([name, quantity]) => {
-                    if (quantity >= 0) { // Ajout des ingrédients disponibles
-                        select.innerHTML += `<option value="${name}">${name} (${quantity})</option>`;
-                    }
+                    select.innerHTML += `<option value="${name}">${name} (${quantity})</option>`;
                 });
                 select.value = selectedValue; // Réappliquer la sélection précédente
             }
@@ -54,8 +52,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const name = document.getElementById('ingredientInput').value.trim();
             const quantity = parseInt(document.getElementById('quantityInput').value, 10);
 
-            if (!name || isNaN(quantity) || quantity <= 0) {
-                document.getElementById('ingredientError').textContent = 'Veuillez entrer des valeurs valides.';
+            if (!name || !/^[a-zA-Z]+$/.test(name) || isNaN(quantity) || quantity <= 0) {
+                document.getElementById('ingredientError').textContent = 'Veuillez entrer un nom valide (lettres uniquement) et une quantité valide.';
                 return;
             }
 
@@ -89,9 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 Object.entries(ingredients).forEach(([name, quantity]) => {
                     const selectedCount = selectedIngredients.filter(ingredient => ingredient === name).length;
                     const availableQuantity = quantity - selectedCount;
-                    if (availableQuantity >= 0) { // Ajout des ingrédients disponibles
-                        select.innerHTML += `<option value="${name}">${name} (${availableQuantity})</option>`;
-                    }
+                    select.innerHTML += `<option value="${name}">${name} (${availableQuantity})</option>`;
                 });
                 select.value = selectedValue; // Réappliquer la sélection précédente
             }
@@ -112,8 +108,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const ingredient2 = $('#ingredientTwo').val();
             const ingredient3 = $('#ingredientThree').val();
 
-            if (!burgerName || !ingredient1 || !ingredient2 || !ingredient3) {
-                $('#burgerError').text('Veuillez remplir tous les champs.');
+            if (!burgerName || !/^[a-zA-Z]+$/.test(burgerName) || !ingredient1 || !ingredient2 || !ingredient3) {
+                showNotification('Veuillez entrer un nom de burger valide (lettres uniquement) et remplir tous les champs.', 'error');
                 return;
             }
 
@@ -127,9 +123,16 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             if (hasError) {
-                $('#burgerError').text('Pas assez d\'ingrédients pour créer ce burger.');
+                showNotification('Pas assez d\'ingrédients pour créer ce burger.', 'error');
                 return;
             }
+
+            // Supprimer les ingrédients avec une quantité de 0
+            Object.keys(ingredients).forEach(name => {
+                if (ingredients[name] === 0) {
+                    delete ingredients[name];
+                }
+            });
 
             localStorage.setItem('ingredients', JSON.stringify(ingredients));
 

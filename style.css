@@ -24,6 +24,9 @@ body {
     padding: 0;
     color: var(--couleurtexte);
     scroll-behavior: smooth;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 /* ==========================
@@ -258,6 +261,7 @@ footer {
     color: var(--couleurtextegris);
     margin-top: 2rem;
     box-shadow: 0 -2px 8px var(--ombre-legere);
+    margin-top: auto;
 }
 
 /* ==========================
