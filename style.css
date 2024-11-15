@@ -1,5 +1,7 @@
-/* Définition des variables de couleurs */
-:root {
+/* ==========================
+   Définition des variables de couleurs
+   ========================== */
+   :root {
     --couleurprincipale: #d9534f;
     --couleursecondaire: #f5f5f5;
     --couleurbackground: #ffffff;
@@ -12,7 +14,9 @@
     --ombre-forte: rgba(0, 0, 0, 0.2);
 }
 
-/* Style général */
+/* ==========================
+   Style général
+   ========================== */
 body {
     font-family: Arial, sans-serif;
     background-color: var(--couleurbackground);
@@ -22,7 +26,9 @@ body {
     scroll-behavior: smooth;
 }
 
-/* Navigation */
+/* ==========================
+   Navigation
+   ========================== */
 .navbar {
     box-shadow: 0 4px 8px var(--ombre-legere);
     background-color: var(--couleurfond);
@@ -45,7 +51,9 @@ body {
     color: var(--couleurprincipale) !important;
 }
 
-/* Sections */
+/* ==========================
+   Sections principales
+   ========================== */
 #ingredientZone, #burgerZone {
     padding-top: 100px;
     margin-top: -70px;
@@ -56,7 +64,9 @@ body {
     margin-bottom: 2rem;
 }
 
-/* Carousel */
+/* ==========================
+   Carousel
+   ========================== */
 #carouselContainer {
     text-align: center;
     margin-top: 20px;
@@ -85,7 +95,9 @@ body {
     margin-top: 10px;
 }
 
-/* Formulaires */
+/* ==========================
+   Formulaires
+   ========================== */
 .container h3 {
     color: var(--couleurprincipale);
     font-weight: bold;
@@ -112,7 +124,9 @@ body {
     background-color: darken(var(--couleurprincipale), 10%);
 }
 
-/* Notifications */
+/* ==========================
+   Notifications
+   ========================== */
 #notifications {
     position: fixed;
     top: 10px;
@@ -134,6 +148,7 @@ body {
     animation: slideIn 0.5s, fadeOut 0.5s 4s forwards;
 }
 
+/* Animation des notifications */
 @keyframes slideIn {
     from {
         transform: translateX(100%);
@@ -152,7 +167,9 @@ body {
     }
 }
 
-/* Images d'ingrédients */
+/* ==========================
+   Images d'ingrédients
+   ========================== */
 .img-fluid {
     border-radius: 5px;
     box-shadow: 0 4px 8px var(--ombre-legere);
@@ -163,14 +180,18 @@ body {
     margin: 0 auto;
 }
 
-/* Messages d'erreur */
+/* ==========================
+   Messages d'erreur
+   ========================== */
 .text-danger {
     font-size: 0.9rem;
     font-weight: bold;
     text-align: center;
 }
 
-/* Section Qui sommes-nous */
+/* ==========================
+   Section "Qui sommes-nous"
+   ========================== */
 #quiSommesNous {
     background-color: var(--couleurfond);
     padding: 2rem;
@@ -221,6 +242,9 @@ body {
     line-height: 1.5;
 }
 
+/* ==========================
+   Pied de page
+   ========================== */
 footer {
     background-color: var(--couleursecondaire);
     text-align: center;
@@ -231,7 +255,9 @@ footer {
     box-shadow: 0 -2px 8px var(--ombre-legere);
 }
 
-/* Ajustements mobiles */
+/* ==========================
+   Ajustements mobiles
+   ========================== */
 @media (max-width: 768px) {
     #carouselContainer {
         padding: 0 10px;
