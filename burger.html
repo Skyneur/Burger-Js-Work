@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Burger Factory - Créer un Burger</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="index.html">Burger Factory</a>
+        <div class="collapse navbar-collapse" id="navMenu">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="ingredient.html">Créer un Ingrédient</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="burger.html">Créer un Burger</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="quisommesnous.html">Qui sommes-nous ?</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <div id="burgerZone" class="row">
+            <div class="col-md-12">
+                <h3>Création de Burger</h3>
+                <form id="burgerForm">
+                    <div class="form-group">
+                        <label for="burgerInput">Nom du Burger</label>
+                        <input type="text" class="form-control" id="burgerInput" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ingredientOne">Ingrédient 1</label>
+                        <select id="ingredientOne" class="form-control" required>
+                            <option value="">Sélectionner un ingrédient</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="ingredientTwo">Ingrédient 2</label>
+                        <select id="ingredientTwo" class="form-control" required>
+                            <option value="">Sélectionner un ingrédient</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="ingredientThree">Ingrédient 3</label>
+                        <select id="ingredientThree" class="form-control" required>
+                            <option value="">Sélectionner un ingrédient</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Créer le Burger</button>
+                </form>
+                <div id="burgerError" class="text-danger mt-3"></div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        © 2024 Burger Factory. Tous droits réservés.
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

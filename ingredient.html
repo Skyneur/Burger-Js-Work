@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Burger Factory</title>
+    <title>Burger Factory - Ingrédients</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -27,14 +27,33 @@
             </ul>
         </div>
     </nav>
-    <div id="notifications"></div>
-    <div id="carouselContainer">
-        <img id="carouselImage" src="assets/classicburger.png" alt="Image de burger">
-        <p id="burgerLabel"></p>
+    <div class="container mt-5">
+        <div id="ingredientZone" class="row">
+            <div class="col-md-6">
+                <h3>Créer votre Ingrédient</h3>
+                <form id="ingredientForm">
+                    <div class="form-group">
+                        <label for="ingredientInput">Nom</label>
+                        <input type="text" class="form-control" id="ingredientInput" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="quantityInput">Quantité</label>
+                        <input type="number" class="form-control" id="quantityInput" required min="1">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Créer l’ingrédient</button>
+                </form>
+                <div id="ingredientError" class="text-danger mt-3"></div>
+            </div>
+            <div class="col-md-6">
+                <h3>Image des Ingrédients</h3>
+                <img src="assets/ingredient.jpg" alt="Image des ingrédients" class="img-fluid">
+            </div>
+        </div>
     </div>
-    <footer></footer>
+    <footer>
         © 2024 Burger Factory. Tous droits réservés.
     </footer>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
