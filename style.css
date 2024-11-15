@@ -36,6 +36,15 @@ body {
     box-shadow: 0 4px 8px var(--ombre-legere);
     background-color: var(--couleurfond);
     padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-nav {
+    display: flex;
+    justify-content: flex-end;
+    flex-grow: 1;
 }
 
 .navbar-brand {
@@ -51,15 +60,15 @@ body {
 }
 
 .nav-link:hover {
-    color: var(--couleurprincipale) !important;
+    color: darken(var(--couleurprincipale), 10%) !important;
 }
 
 /* ==========================
    Sections principales
    ========================== */
-#ingredientZone, #burgerZone {
+#ingredientZone, #burgerZone, #quiSommesNous {
     padding-top: 100px;
-    margin-top: -70px;
+    margin-top: 20px; /* Ajout d'espace avec la navbar */
     background-color: var(--couleurfond);
     padding: 2rem 1rem;
     border-radius: 10px;
@@ -72,7 +81,7 @@ body {
    ========================== */
 #carouselContainer {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 40px; /* Ajout d'espace avec la navbar */
     margin-bottom: 90px;
 }
 
@@ -124,7 +133,11 @@ body {
 }
 
 .btn-primary:hover {
-    background-color: darken(var(--couleurprincipale), 10%);
+    background-color: lighten(var(--couleurprincipale), 10%);
+}
+
+.btn-secondary:hover {
+    background-color: lighten(var(--couleursecondaire), 10%);
 }
 
 /* ==========================
@@ -152,7 +165,7 @@ body {
 }
 
 .notification.error {
-    background-color: #d9534f;
+    background-color: #d9534f; /* Fond rouge pour les erreurs */
     color: #ffffff;
 }
 
@@ -259,9 +272,8 @@ footer {
     padding: 1rem 0;
     font-size: 0.9rem;
     color: var(--couleurtextegris);
-    margin-top: 2rem;
-    box-shadow: 0 -2px 8px var(--ombre-legere);
     margin-top: auto;
+    box-shadow: 0 -2px 8px var(--ombre-legere);
 }
 
 /* ==========================
