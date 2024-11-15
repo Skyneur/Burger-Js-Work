@@ -32,7 +32,7 @@ body {
 }
 
 /* Sections */
-#ingredient-section, #burger-section {
+#ingredientZone, #burgerZone {
     padding-top: 100px;
     margin-top: -70px;
     background-color: #ffffff;
@@ -42,14 +42,14 @@ body {
     margin-bottom: 2rem;
 }
 
-/* Slideshow */
-#slideshow-container {
+/* Carousel */
+#carouselContainer {
     text-align: center;
     margin-top: 20px;
     margin-bottom: 90px;
 }
 
-#slideshow-image {
+#carouselImage {
     max-width: 300px;
     height: 200px;
     object-fit: cover;
@@ -60,11 +60,11 @@ body {
     margin: 0 auto;
 }
 
-#slideshow-image:hover {
+#carouselImage:hover {
     transform: scale(1.05);
 }
 
-#burger-name {
+#burgerLabel {
     font-size: 1.2rem;
     font-weight: bold;
     color: #d9534f;
@@ -126,7 +126,7 @@ footer {
 
 /* Ajustements mobiles */
 @media (max-width: 768px) {
-    #slideshow-container {
+    #carouselContainer {
         padding: 0 10px;
     }
 
@@ -138,7 +138,7 @@ footer {
         text-align: center;
     }
 
-    #ingredient-section, #burger-section {
+    #ingredientZone, #burgerZone {
         padding: 1.5rem;
     }
 }

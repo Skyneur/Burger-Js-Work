@@ -1,103 +1,66 @@
 // Variables globales
-const images = [
-    { src: 'burger1.png', name: 'Burger 1' },
-    { src: 'burger2.png', name: 'Burger 2' },
-    { src: 'burger3.png', name: 'Burger 3' }
+const burgerImages = [
+    { src: 'classicburger.png', name: 'Classique Burger' },
+    { src: 'original.png', name: 'l\'Original' },
+    { src: 'bbqbacon.png', name: 'BbqBacon' }
 ];
 
-let currentIndex = 0;
-const imageElement = document.getElementById('slideshow-image');
-const burgerNameElement = document.getElementById('burger-name');
+let currentBurgerIndex = 0;
+const carouselImageElement = document.getElementById('carouselImage');
+const burgerLabelElement = document.getElementById('burgerLabel');
 
 // Fonction pour changer l'image
-function showNextImage() {
-    currentIndex = (currentIndex + 1) % images.length;
-    imageElement.src = `assets/${images[currentIndex].src}`;
-}
-
-// Fonction pour afficher le nom du burger
-function showBurgerName() {
-    burgerNameElement.textContent = images[currentIndex].name;
+function updateBurgerImage() {
+    currentBurgerIndex = (currentBurgerIndex + 1) % burgerImages.length;
+    carouselImageElement.src = `assets/${burgerImages[currentBurgerIndex].src}`;
+    burgerLabelElement.textContent = burgerImages[currentBurgerIndex].name;
 }
 
 // Intervalle pour changer l'image
-imageElement.addEventListener('click', showBurgerName);
-setInterval(showNextImage, 10000);
-
-// Configuration initiale de l'image
-imageElement.src = `assets/${images[currentIndex].src}`;
+setInterval(updateBurgerImage, 10000);
+carouselImageElement.addEventListener('click', updateBurgerImage);
 
 // Gestion des formulaires
 document.addEventListener('DOMContentLoaded', function() {
-    const ingredientForm = document.getElementById('ingredient-form');
-    const ingredientList = document.getElementById('ingredient-list');
-    const errorMessage = document.getElementById('error-message');
+    const ingredientForm = document.getElementById('ingredientForm');
+    const burgerForm = document.getElementById('burgerForm');
+    const ingredientOneSelect = document.getElementById('ingredientOne');
+    const ingredientTwoSelect = document.getElementById('ingredientTwo');
+    const ingredientThreeSelect = document.getElementById('ingredientThree');
 
-    const burgerForm = document.getElementById('burger-form');
-    const burgerErrorMessage = document.getElementById('burger-error-message');
-    const ingredientSelects = [
-        document.getElementById('ingredient1'),
-        document.getElementById('ingredient2'),
-        document.getElementById('ingredient3')
-    ];
+    const ingredients = [];
 
-    const ingredients = new Map();
-
-    // Gestion de la soumission du formulaire d'ingrédients
     ingredientForm.addEventListener('submit', function(event) {
         event.preventDefault();
-        
-        const name = document.getElementById('ingredient-name').value.trim();
-        const quantity = parseInt(document.getElementById('ingredient-quantity').value.trim(), 10);
-        
-        if (!name || isNaN(quantity) || quantity <= 0) {
-            errorMessage.textContent = 'Veuillez entrer un nom valide et une quantité supérieure à 0.';
+        const name = document.getElementById('ingredientInput').value.trim();
+        const quantity = document.getElementById('quantityInput').value;
+
+        if (!name || quantity <= 0) {
+            document.getElementById('ingredientError').textContent = 'Veuillez entrer des valeurs valides.';
             return;
         }
-        
-        const option = document.createElement('option');
-        option.value = name;
-        option.textContent = `${name} (${quantity})`;
-        
-        ingredientSelects.forEach(select => {
-            const optionClone = option.cloneNode(true);
-            select.appendChild(optionClone);
-        });
-        
-        ingredients.set(name, quantity);
-        
-        errorMessage.textContent = '';
+
+        ingredients.push(name);
+        ingredientOneSelect.innerHTML += `<option value="${name}">${name}</option>`;
+        ingredientTwoSelect.innerHTML += `<option value="${name}">${name}</option>`;
+        ingredientThreeSelect.innerHTML += `<option value="${name}">${name}</option>`;
+        document.getElementById('ingredientError').textContent = '';
         ingredientForm.reset();
     });
 
-    // Gestion de la soumission du formulaire de burger
     burgerForm.addEventListener('submit', function(event) {
         event.preventDefault();
-        
-        const burgerName = document.getElementById('burger-name').value.trim();
-        const ingredient1 = document.getElementById('ingredient1').value;
-        const ingredient2 = document.getElementById('ingredient2').value;
-        const ingredient3 = document.getElementById('ingredient3').value;
-        
+        const burgerName = document.getElementById('burgerInput').value.trim();
+        const ingredient1 = ingredientOneSelect.value;
+        const ingredient2 = ingredientTwoSelect.value;
+        const ingredient3 = ingredientThreeSelect.value;
+
         if (!burgerName || !ingredient1 || !ingredient2 || !ingredient3) {
-            burgerErrorMessage.textContent = 'Veuillez remplir tous les champs.';
+            document.getElementById('burgerError').textContent = 'Veuillez remplir tous les champs.';
             return;
         }
-        
-        const selectedIngredients = [ingredient1, ingredient2, ingredient3];
-        
-        for (const ingredient of selectedIngredients) {
-            if (!ingredients.has(ingredient) || ingredients.get(ingredient) <= 0) {
-                burgerErrorMessage.textContent = `L'ingrédient ${ingredient} n'est pas disponible en quantité suffisante.`;
-                return;
-            }
-        }
-        
-        selectedIngredients.forEach(ingredient => {
-            ingredients.set(ingredient, ingredients.get(ingredient) - 1);
-        });
-        
-        burgerErrorMessage.textContent = '';
+
+        alert(`Burger "${burgerName}" créé avec : ${ingredient1}, ${ingredient2}, ${ingredient3}`);
         burgerForm.reset();
     });
 });

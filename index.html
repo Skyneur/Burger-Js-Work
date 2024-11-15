@@ -1,90 +1,90 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Burger factory</title>
+    <title>Burger Factory</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Burger Factory</a>
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="collapse navbar-collapse" id="navMenu">
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="#">Accueil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#ingredient-section">Créer un Ingrédient</a>
+                    <a class="nav-link" href="#ingredientZone">Créer un Ingrédient</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#burger-section">Créer un Burger</a>
+                    <a class="nav-link" href="#burgerZone">Créer un Burger</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" id="about-link">Qui sommes-nous ?</a>
+                    <a class="nav-link" href="#" id="aboutLink">Qui sommes-nous ?</a>
                 </li>
             </ul>
         </div>
     </nav>
 
-    <div id="slideshow-container">
-        <img id="slideshow-image" src="assets/burger1.png" alt="Burger Image">
-        <p id="burger-name"></p>
+    <div id="carouselContainer">
+        <img id="carouselImage" src="assets/classicburger.png" alt="Image de burger">
+        <p id="burgerLabel"></p>
     </div>    
 
     <div class="container mt-5">
-        <div id="ingredient-section" class="row">
+        <div id="ingredientZone" class="row">
             <div class="col-md-6">
                 <h3>Créer votre Ingrédient</h3>
-                <form id="ingredient-form">
+                <form id="ingredientForm">
                     <div class="form-group">
-                        <label for="ingredient-name">Nom</label>
-                        <input type="text" class="form-control" id="ingredient-name" required>
+                        <label for="ingredientInput">Nom</label>
+                        <input type="text" class="form-control" id="ingredientInput" required>
                     </div>
                     <div class="form-group">
-                        <label for="ingredient-quantity">Quantité</label>
-                        <input type="number" class="form-control" id="ingredient-quantity" required min="1">
+                        <label for="quantityInput">Quantité</label>
+                        <input type="number" class="form-control" id="quantityInput" required min="1">
                     </div>
                     <button type="submit" class="btn btn-primary">Créer l’ingrédient</button>
                 </form>
-                <div id="error-message" class="text-danger mt-3"></div>
+                <div id="ingredientError" class="text-danger mt-3"></div>
             </div>
             <div class="col-md-6">
-                <h3>Image des ingrédients</h3>
+                <h3>Image des Ingrédients</h3>
                 <img src="assets/ingredient.jpg" alt="Image des ingrédients" class="img-fluid">
             </div>
         </div>
 
-        <div id="burger-section" class="row mt-5">
+        <div id="burgerZone" class="row mt-5">
             <div class="col-md-12">
-                <h3>Création Burger</h3>
-                <form id="burger-form">
+                <h3>Création de Burger</h3>
+                <form id="burgerForm">
                     <div class="form-group">
-                        <label for="burger-name">Nom du Burger</label>
-                        <input type="text" class="form-control" id="burger-name" required>
+                        <label for="burgerInput">Nom du Burger</label>
+                        <input type="text" class="form-control" id="burgerInput" required>
                     </div>
                     <div class="form-group">
-                        <label for="ingredient1">Ingrédient 1</label>
-                        <select id="ingredient1" class="form-control" required>
+                        <label for="ingredientOne">Ingrédient 1</label>
+                        <select id="ingredientOne" class="form-control" required>
                             <option value="">Sélectionner un ingrédient</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="ingredient2">Ingrédient 2</label>
-                        <select id="ingredient2" class="form-control" required>
+                        <label for="ingredientTwo">Ingrédient 2</label>
+                        <select id="ingredientTwo" class="form-control" required>
                             <option value="">Sélectionner un ingrédient</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="ingredient3">Ingrédient 3</label>
-                        <select id="ingredient3" class="form-control" required>
+                        <label for="ingredientThree">Ingrédient 3</label>
+                        <select id="ingredientThree" class="form-control" required>
                             <option value="">Sélectionner un ingrédient</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Créer le burger</button>
+                    <button type="submit" class="btn btn-primary">Créer le Burger</button>
                 </form>
-                <div id="burger-error-message" class="text-danger mt-3"></div>
+                <div id="burgerError" class="text-danger mt-3"></div>
             </div>
         </div>
     </div>
