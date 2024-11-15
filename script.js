@@ -112,9 +112,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const infoContainer = document.getElementById('infoContainer');
 
     fetchInfoBtn.addEventListener('click', function () {
-        const apiUrl = "https://api.gouv.fr/documentation/api-professionnels-bio";
-        const siret = "79317749400028";
+        // URL API avec le bon paramètre
+        const apiUrl = "https://opendata.agencebio.org/api/gouv/operateurs"; // Base URL
+        const siret = "79317749400028"; // SIRET fourni
 
+        // Requête à l'API
         fetch(`${apiUrl}?siret=${siret}`)
             .then(response => {
                 if (!response.ok) {
@@ -123,15 +125,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 return response.json();
             })
             .then(data => {
-                if (!data || !data.adressesOperateurs || data.adressesOperateurs.length === 0) {
-                    throw new Error('Aucune adresse trouvée dans la réponse de l’API.');
+                // Validation des données reçues
+                if (!data || !data.items || data.items.length === 0) {
+                    throw new Error('Aucune donnée trouvée pour le SIRET fourni.');
                 }
 
-                const numeroBio = data.numeroBio;
-                const gerant = data.gerant;
-                const adresse = data.adressesOperateurs[0];
-                const productions = data.productions || [];
+                const item = data.items[0]; // Premier résultat
+                const numeroBio = item.numeroBio;
+                const gerant = item.gerant;
+                const adresse = item.adressesOperateurs[0]; // Première adresse
+                const productions = item.productions || []; // Liste des productions
 
+                // Construction du contenu HTML
                 infoContainer.innerHTML = `
                     <p>Notre restaurant travaille avec des produits locaux provenant de la ferme bio numéro 
                     <strong>${numeroBio}</strong> de Monsieur <strong>${gerant}</strong>, située à 
@@ -141,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 `;
             })
             .catch(error => {
-                console.error(error.message);
+                console.error('Erreur :', error.message);
                 infoContainer.innerHTML = '<p>Une erreur est survenue. Veuillez réessayer plus tard.</p>';
             });
     });
