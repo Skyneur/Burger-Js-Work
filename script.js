@@ -145,45 +145,42 @@ document.addEventListener('DOMContentLoaded', function() {
     // ==========================
     // Requête API pour "Qui sommes-nous ?"
     // ==========================
-    const fetchInfoBtn = document.getElementById('fetchInfoBtn');
     const infoContainer = document.getElementById('infoContainer');
 
-    if (fetchInfoBtn && infoContainer) {
-        fetchInfoBtn.addEventListener('click', function() {
-            const apiUrl = "https://opendata.agencebio.org/api/gouv/operateurs";
-            const siret = "79317749400028";
+    if (infoContainer) {
+        const apiUrl = "https://opendata.agencebio.org/api/gouv/operateurs";
+        const siret = "79317749400028";
 
-            fetch(`${apiUrl}?siret=${siret}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`Erreur lors de la récupération des informations : ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    if (!data || !data.items || data.items.length === 0) {
-                        throw new Error('Aucune donnée trouvée pour le SIRET fourni.');
-                    }
+        fetch(`${apiUrl}?siret=${siret}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Erreur lors de la récupération des informations : ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (!data || !data.items || data.items.length === 0) {
+                    throw new Error('Aucune donnée trouvée pour le SIRET fourni.');
+                }
 
-                    const item = data.items[0];
-                    const numeroBio = item.numeroBio;
-                    const gerant = item.gerant;
-                    const adresse = item.adressesOperateurs[0];
-                    const productions = item.productions || [];
+                const item = data.items[0];
+                const numeroBio = item.numeroBio;
+                const gerant = item.gerant;
+                const adresse = item.adressesOperateurs[0];
+                const productions = item.productions || [];
 
-                    infoContainer.innerHTML = `
-                        <p>Notre restaurant travaille avec des produits locaux provenant de la ferme bio numéro 
-                        <strong>${numeroBio}</strong> de Monsieur <strong>${gerant}</strong>, située à 
-                        <strong>${adresse.lieu} ${adresse.codePostal} ${adresse.ville}</strong>.</p>
-                        <p>Cette ferme intervient dans les commerces :</p>
-                        <ul>${productions.map(prod => `<li>${prod.nom}</li>`).join('')}</ul>
-                    `;
-                })
-                .catch(error => {
-                    console.error('Erreur :', error.message);
-                    infoContainer.innerHTML = '<p>Une erreur est survenue. Veuillez réessayer plus tard.</p>';
-                });
-        });
+                infoContainer.innerHTML = `
+                    <p>Nous travaillons avec des produits locaux provenant de la ferme bio numéro 
+                    <strong>${numeroBio}</strong> de Monsieur <strong>${gerant}</strong>, située à 
+                    <strong>${adresse.lieu} ${adresse.codePostal} ${adresse.ville}</strong>.</p>
+                    <p>Cette ferme intervient dans les commerces :</p>
+                    <ul>${productions.map(prod => `<li>${prod.nom}</li>`).join('')}</ul>
+                `;
+            })
+            .catch(error => {
+                console.error('Erreur :', error.message);
+                infoContainer.innerHTML = '<p>Une erreur est survenue. Veuillez réessayer plus tard.</p>';
+            });
     }
 
     // ==========================
