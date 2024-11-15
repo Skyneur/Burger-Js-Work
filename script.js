@@ -77,26 +77,64 @@ document.addEventListener('DOMContentLoaded', function() {
         burgerForm.reset();
     });
 
+    // const fetchInfoBtn = document.getElementById('fetchInfoBtn');
+    // const infoContainer = document.getElementById('infoContainer');
+
+    // fetchInfoBtn.addEventListener('click', function() {
+    //     fetch('mockData.json')
+    //         .then(response => {
+    //             if (!response.ok) throw new Error('Erreur lors de la récupération des informations.');
+    //             return response.json();
+    //         })
+    //         .then(data => {
+    //             if (!data.adressesOperateurs || data.adressesOperateurs.length === 0) {
+    //                 throw new Error('Aucune adresse trouvée.');
+    //             }
+
+    //             const adresse = data.adressesOperateurs[0];
+    //             const productions = data.productions || [];
+
+    //             infoContainer.innerHTML = `
+    //                 <p>Notre restaurant travaille avec des produits locaux provenant de la ferme bio numéro 
+    //                 <strong>${data.numeroBio}</strong> de Monsieur <strong>${data.gerant}</strong>, située à 
+    //                 <strong>${adresse.lieu} ${adresse.codePostal} ${adresse.ville}</strong>.</p>
+    //                 <p>Cette ferme intervient dans les commerces :</p>
+    //                 <ul>${productions.map(prod => `<li>${prod.nom}</li>`).join('')}</ul>
+    //             `;
+    //         })
+    //         .catch(error => {
+    //             console.error(error.message);
+    //             infoContainer.innerHTML = '<p>Une erreur est survenue. Veuillez réessayer plus tard.</p>';
+    //         });
+    // });
+    
     const fetchInfoBtn = document.getElementById('fetchInfoBtn');
     const infoContainer = document.getElementById('infoContainer');
 
-    fetchInfoBtn.addEventListener('click', function() {
-        fetch('mockData.json')
+    fetchInfoBtn.addEventListener('click', function () {
+        const apiUrl = "https://api.gouv.fr/documentation/api-professionnels-bio";
+        const siret = "79317749400028";
+
+        fetch(`${apiUrl}?siret=${siret}`)
             .then(response => {
-                if (!response.ok) throw new Error('Erreur lors de la récupération des informations.');
+                if (!response.ok) {
+                    throw new Error(`Erreur lors de la récupération des informations : ${response.status}`);
+                }
                 return response.json();
             })
             .then(data => {
-                if (!data.adressesOperateurs || data.adressesOperateurs.length === 0) {
-                    throw new Error('Aucune adresse trouvée.');
+                if (!data || !data.adressesOperateurs || data.adressesOperateurs.length === 0) {
+                    throw new Error('Aucune adresse trouvée dans la réponse de l’API.');
                 }
 
+                const numeroBio = data.numeroBio;
+                const gerant = data.gerant;
                 const adresse = data.adressesOperateurs[0];
                 const productions = data.productions || [];
 
                 infoContainer.innerHTML = `
                     <p>Notre restaurant travaille avec des produits locaux provenant de la ferme bio numéro 
-                    <strong>${data.numeroBio}</strong> de Monsieur <strong>${data.gerant}</strong>, située à 
+                    <strong>${numeroBio}</strong> de Monsieur <strong>${gerant}</strong>, située à 
                     <strong>${adresse.lieu} ${adresse.codePostal} ${adresse.ville}</strong>.</p>
                     <p>Cette ferme intervient dans les commerces :</p>
                     <ul>${productions.map(prod => `<li>${prod.nom}</li>`).join('')}</ul>
