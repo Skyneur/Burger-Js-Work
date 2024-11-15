@@ -30,18 +30,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const ingredientOneSelect = document.getElementById('ingredientOne');
     const ingredientTwoSelect = document.getElementById('ingredientTwo');
     const ingredientThreeSelect = document.getElementById('ingredientThree');
-    const ingredients = {}; // Stockage des ingrédients ajoutés
+    let ingredients = JSON.parse(localStorage.getItem('ingredients')) || {}; // Charger les ingrédients depuis le localStorage
 
     function updateIngredientOptions() {
         const selects = [ingredientOneSelect, ingredientTwoSelect, ingredientThreeSelect];
         selects.forEach(select => {
             if (select) {
-                select.innerHTML = ''; // On vide les options actuelles
+                const selectedValue = select.value; // Sauvegarder la valeur sélectionnée
+                select.innerHTML = '<option value="">Sélectionner un ingrédient</option>'; // Option par défaut
                 Object.entries(ingredients).forEach(([name, quantity]) => {
-                    if (quantity > 0) { // Ajout des ingrédients disponibles
+                    if (quantity >= 0) { // Ajout des ingrédients disponibles
                         select.innerHTML += `<option value="${name}">${name} (${quantity})</option>`;
                     }
                 });
+                select.value = selectedValue; // Réappliquer la sélection précédente
             }
         });
     }
@@ -72,22 +74,36 @@ document.addEventListener('DOMContentLoaded', function() {
     // ==========================
     const burgerForm = document.getElementById('burgerForm');
 
-    if (burgerForm) {
-        function updateIngredientOptions() {
-            const ingredients = JSON.parse(localStorage.getItem('ingredients')) || {};
-            const selects = ['#ingredientOne', '#ingredientTwo', '#ingredientThree'];
-            selects.forEach(select => {
-                $(select).empty();
-                $(select).append('<option value="">Sélectionner un ingrédient</option>');
-                $.each(ingredients, function(name, quantity) {
-                    if (quantity > 0) {
-                        $(select).append(`<option value="${name}">${name} (${quantity})</option>`);
+    function updateBurgerIngredientOptions() {
+        const selectedIngredients = [
+            ingredientOneSelect.value,
+            ingredientTwoSelect.value,
+            ingredientThreeSelect.value
+        ];
+
+        const selects = [ingredientOneSelect, ingredientTwoSelect, ingredientThreeSelect];
+        selects.forEach(select => {
+            if (select) {
+                const selectedValue = select.value; // Sauvegarder la valeur sélectionnée
+                select.innerHTML = '<option value="">Sélectionner un ingrédient</option>'; // Option par défaut
+                Object.entries(ingredients).forEach(([name, quantity]) => {
+                    const selectedCount = selectedIngredients.filter(ingredient => ingredient === name).length;
+                    const availableQuantity = quantity - selectedCount;
+                    if (availableQuantity >= 0) { // Ajout des ingrédients disponibles
+                        select.innerHTML += `<option value="${name}">${name} (${availableQuantity})</option>`;
                     }
                 });
-            });
-        }
+                select.value = selectedValue; // Réappliquer la sélection précédente
+            }
+        });
+    }
 
+    if (burgerForm) {
         updateIngredientOptions();
+
+        [ingredientOneSelect, ingredientTwoSelect, ingredientThreeSelect].forEach(select => {
+            select.addEventListener('change', updateBurgerIngredientOptions);
+        });
 
         $('#burgerForm').on('submit', function(event) {
             event.preventDefault();
@@ -101,17 +117,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            let ingredients = JSON.parse(localStorage.getItem('ingredients')) || {};
+            let hasError = false;
             [ingredient1, ingredient2, ingredient3].forEach(ingredient => {
                 if (ingredients[ingredient] > 0) {
                     ingredients[ingredient] -= 1;
+                } else {
+                    hasError = true;
                 }
             });
+
+            if (hasError) {
+                $('#burgerError').text('Pas assez d\'ingrédients pour créer ce burger.');
+                return;
+            }
+
             localStorage.setItem('ingredients', JSON.stringify(ingredients));
 
             updateIngredientOptions();
             $('#burgerForm')[0].reset();
-            alert(`Burger "${burgerName}" créé avec : ${ingredient1}, ${ingredient2}, ${ingredient3}.`);
+            showNotification(`Burger "${burgerName}" créé avec : ${ingredient1}, ${ingredient2}, ${ingredient3}.`);
         });
     }
 
@@ -173,7 +197,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const notification = document.createElement('div');
         notification.classList.add('notification');
         if (type === 'error') {
-            notification.style.backgroundColor = 'red';
+            notification.classList.add('error');
         }
         notification.textContent = message;
 

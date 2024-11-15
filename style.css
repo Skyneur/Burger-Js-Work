@@ -148,6 +148,11 @@ body {
     animation: slideIn 0.5s, fadeOut 0.5s 4s forwards;
 }
 
+.notification.error {
+    background-color: #d9534f;
+    color: #ffffff;
+}
+
 /* Animation des notifications */
 @keyframes slideIn {
     from {
