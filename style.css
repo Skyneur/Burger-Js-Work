@@ -3,6 +3,7 @@
     --couleurprincipale: #d9534f;
     --couleursecondaire: #f5f5f5;
     --couleurbackground: #ffffff;
+    --couleursuccess: #449237;
     --couleurtexte: #333;
     --couleurfond: #ffffff;
     --couleurtexteclair: #555;
@@ -109,6 +110,46 @@ body {
 
 .btn-primary:hover {
     background-color: darken(var(--couleurprincipale), 10%);
+}
+
+/* Notifications */
+#notifications {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.notification {
+    background-color: var(--couleursuccess);
+    color: var(--couleurfond);
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px var(--ombre-legere);
+    font-size: 1rem;
+    font-weight: bold;
+    animation: slideIn 0.5s, fadeOut 0.5s 4s forwards;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
 }
 
 /* Images d'ingrédients */

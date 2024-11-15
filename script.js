@@ -38,21 +38,49 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    function showNotification(message, type = 'success') {
+        const notificationsContainer = document.getElementById('notifications');
+    
+        if (!notificationsContainer) {
+            console.error('Le conteneur des notifications est introuvable.');
+            return;
+        }
+    
+        // Créer un nouvel élément pour la notification
+        const notification = document.createElement('div');
+        notification.classList.add('notification');
+        if (type === 'error') {
+            notification.style.backgroundColor = 'red';
+        }
+        notification.textContent = message;
+    
+        // Ajouter la notification au conteneur
+        notificationsContainer.appendChild(notification);
+    
+        // Supprimer la notification après 5 secondes
+        setTimeout(() => {
+            notification.remove();
+        }, 5000);
+    }    
+
     ingredientForm.addEventListener('submit', function(event) {
         event.preventDefault();
         const name = document.getElementById('ingredientInput').value.trim();
         const quantity = parseInt(document.getElementById('quantityInput').value, 10);
-
+    
         if (!name || isNaN(quantity) || quantity <= 0) {
             document.getElementById('ingredientError').textContent = 'Veuillez entrer des valeurs valides.';
             return;
         }
-
+    
         ingredients[name] = (ingredients[name] || 0) + quantity;
         updateIngredientOptions();
         document.getElementById('ingredientError').textContent = '';
         ingredientForm.reset();
+    
+        showNotification(`Ingrédient "${name}" ajouté avec une quantité de ${quantity}.`);
     });
+    
 
     burgerForm.addEventListener('submit', function(event) {
         event.preventDefault();
@@ -60,23 +88,28 @@ document.addEventListener('DOMContentLoaded', function() {
         const ingredient1 = ingredientOneSelect.value;
         const ingredient2 = ingredientTwoSelect.value;
         const ingredient3 = ingredientThreeSelect.value;
-
+    
         if (!burgerName || !ingredient1 || !ingredient2 || !ingredient3) {
             document.getElementById('burgerError').textContent = 'Veuillez remplir tous les champs.';
             return;
         }
-
+    
         [ingredient1, ingredient2, ingredient3].forEach(ingredient => {
             if (ingredients[ingredient] > 0) {
                 ingredients[ingredient] -= 1;
             }
         });
-
+    
         updateIngredientOptions();
-        alert(`Burger "${burgerName}" créé avec : ${ingredient1}, ${ingredient2}, ${ingredient3}`);
         burgerForm.reset();
+    
+        showNotification(`Burger "${burgerName}" créé avec : ${ingredient1}, ${ingredient2}, ${ingredient3}.`);
     });
+        
 
+    //
+    //      Test pour simuler l'appel à une API via un fichier json
+    //
     // const fetchInfoBtn = document.getElementById('fetchInfoBtn');
     // const infoContainer = document.getElementById('infoContainer');
 
